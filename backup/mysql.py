@@ -3,6 +3,9 @@ import datetime
 import gzip
 import os
 import yaml
+from logger.logger import setup_logger
+
+logger = setup_logger()
 
 def load_config():
     with open("config.yaml", 'r') as file:
@@ -22,8 +25,9 @@ def backup():
     backup_filename = f"{database}_{timestamp}.sql"
     compressed_filename = backup_filename + ".gz"
 
+    logger.info(f"Starting MySQL backup for database '{database}'")
+
     try:
-        # Export using mysqldump
         dump_cmd = [
             "mysqldump",
             f"-h{host}",
@@ -32,19 +36,24 @@ def backup():
             f"-p{password}",
             database
         ]
+
         with open(backup_filename, "wb") as f:
             result = subprocess.run(dump_cmd, stdout=f, stderr=subprocess.PIPE)
 
         if result.returncode != 0:
-            print("Error during mysqldump:", result.stderr.decode())
+            error_msg = result.stderr.decode()
+            logger.error(f"MySQL backup failed: {error_msg}")
+            print(f"Error during mysqldump: {error_msg}")
             return
 
-        # Compress the backup file
         with open(backup_filename, "rb") as f_in, gzip.open(compressed_filename, "wb") as f_out:
             f_out.writelines(f_in)
 
         os.remove(backup_filename)
+
+        logger.info(f"Backup completed successfully: {compressed_filename}")
         print(f"Backup completed and compressed to {compressed_filename}")
 
     except Exception as e:
+        logger.exception(f"MySQL backup failed: {e}")
         print(f"Backup failed: {e}")

@@ -2,8 +2,26 @@ mysql:
   host: localhost
   port: 3306
   username: root
-  password: rootpassword
-  database: mydatabase
+  password: rootpass
+  database: mydb
+
+postgres:
+  host: localhost
+  port: 5432
+  username: postgres
+  password: pgpass
+  database: mydb
+
+mongodb:
+  host: localhost
+  port: 27017
+  username: myuser
+  password: mypass
+  auth_db: admin
+  database: mydb
+
+sqlite:
+  db_path: ./mydatabase.sqlite
 
 s3:
   bucket: my-backup-bucket
