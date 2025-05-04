@@ -1,0 +1,8 @@
+typer[all]
+boto3
+google-cloud-storage
+azure-storage-blob
+mysql-connector-python
+psycopg2-binary
+pymongo
+pyyaml

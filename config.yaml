@@ -1,0 +1,12 @@
+mysql:
+  host: localhost
+  port: 3306
+  username: root
+  password: password
+  database: mydb
+
+s3:
+  bucket: my-backup-bucket
+
+slack:
+  webhook: https://hooks.slack.com/services/...
