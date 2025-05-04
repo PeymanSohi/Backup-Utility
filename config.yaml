@@ -2,8 +2,8 @@ mysql:
   host: localhost
   port: 3306
   username: root
-  password: password
-  database: mydb
+  password: rootpassword
+  database: mydatabase
 
 s3:
   bucket: my-backup-bucket
